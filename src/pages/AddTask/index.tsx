@@ -1,8 +1,8 @@
 const AddTask = () => {
 
-    return(
-        <div>Estoy en AddTask</div>
-    )
+  return(
+      <div>Estoy en AddTask</div>
+  )
 
 }
 

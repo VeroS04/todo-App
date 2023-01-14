@@ -1,5 +1,7 @@
 const Login = () => {
-    return <form action="">Login</form>;
+    return (
+      <div>Estoy en Login</div>
+    )
   };
   
   export { Login };

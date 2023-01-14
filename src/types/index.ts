@@ -10,7 +10,6 @@ export type User = {
   export type Category = {
     id: string;
     name: string;
-    color: string;
   };
   
   export type Task = {

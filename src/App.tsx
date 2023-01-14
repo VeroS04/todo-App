@@ -7,7 +7,7 @@ function App() {
       <Header />
       <Menu />
       <Main>
-        <div className="container">
+        <div>
           <Outlet />
         </div>
       </Main>

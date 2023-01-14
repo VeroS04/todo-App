@@ -1,9 +1,9 @@
 import { useParams } from "react-router-dom";
 
 const SaveUser = () => {
-  const { id } = useParams();
+  const { userId } = useParams();
 
-  return <h1>Estoy en SaveUser editando el usuario {id}</h1>;
+  return <h1>Estoy en SaveUser editando el usuario {userId}</h1>;
 };
 
 export { SaveUser };
