@@ -14,7 +14,7 @@ const SaveCategory = () => {
       })
     }
   };
-  fetchCategory();
+  if(catName === '') fetchCategory()
 
   const saveCategory = (e: any) => {
     e.preventDefault();

@@ -1,6 +1,17 @@
+import { mapToArray } from "../../helpers/mapToArray";
 import { Category } from "../../types";
 
-const getAll = () => {};
+const getAll = async () => {
+
+  const response = await fetch(
+    `https://todoapp-14821-default-rtdb.firebaseio.com/categories.json`
+  );
+
+  const data = await response.json();
+
+  return mapToArray(data);
+
+};
 
 const get = async (id: string) => {
 
