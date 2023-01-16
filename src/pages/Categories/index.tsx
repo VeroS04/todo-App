@@ -1,42 +1,57 @@
-import { useState } from "react"
-import { Link } from "react-router-dom"
+import { useState } from "react";
 import { categoriesService } from "../../services"
-import { Category } from "../../types"
+import { Category } from "../../types";
 
 const Categories = () => {
 
-  const [categories, setCategories] = useState<Category[]>([])
+  const [categories, setCategorie] = useState<Category[]>([])
 
-  const fetchCategories = () => {
-    categoriesService.getAll().then(data =>{
-      setCategories(data as Category[])
-    })
+  const obtenerCategorias = async () => {
+    const rta = await categoriesService.getAll();
+
+     setCategorie(rta)
   }
 
-  fetchCategories()
+  if(!categories.length) obtenerCategorias()
 
-  return(
-      <table border={1}>
-        <thead>
-          <tr>
-            <th>ID</th>
-            <th>Nombre</th>
-            <th></th>
-          </tr>
-        </thead>
-        <tbody>
-          {categories.map((cat) => {
-            return (
-              <tr>
+  const borrarCategoria = async (id: string) => {
+    await categoriesService.remove(id);
+    obtenerCategorias()
+  }
+
+  return (
+   <div>
+    <hr />
+    <h1>Categorias</h1>
+    <table border={1}>
+      <thead>
+        <tr>
+          <td>ID</td>
+          <th>Name</th>
+          <th>Color</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        {
+          categories.map((elem) => {
+            return(
+              <tr key={elem.id}>
+                <td>{elem.id}</td>
+                <td>{elem.name}</td>
+                <td>{elem.color}</td>
                 <td>
-                  <Link to={`/categories/save/${cat.id}`}>{cat.id}</Link>
+                  <button className="btn" onClick={() => borrarCategoria(elem.id)}>Borrar</button>
                 </td>
-                <td>{cat.name}</td>
               </tr>
             )
-          })}
-        </tbody>
-      </table>
+          })
+        }
+      </tbody>
+    </table>
+      
+    <hr />
+   </div>
   )
 
 }

@@ -1,43 +1,54 @@
+import { DB_BASE_URL } from "../../constants";
 import { mapToArray } from "../../helpers/mapToArray";
-import { Category } from "../../types";
+import { Categories } from "../../pages";
+import { Category } from "../../types"
 
-const getAll = async () => {
 
-  const response = await fetch(
-    `https://todoapp-14821-default-rtdb.firebaseio.com/categories.json`
-  );
+const getAll = async (): Promise<Category[]> => {
 
-  const data = await response.json();
+   const response = await fetch (`${DB_BASE_URL}/categories.json`)
+   const data = await response.json();
 
-  return mapToArray(data);
+    return mapToArray<Category>(data)
+}
 
-};
+const get = (id: string) => {
 
-const get = async (id: string) => {
+}
 
-  const response = await fetch(
-    `https://todoapp-14821-default-rtdb.firebaseio.com/categories/${id}.json`
-  );
+type Payload = Omit<Category, 'id'>
 
-  const data = await response.json();
+const add = async (category: Payload) => {
 
-  return data;
-  
-};
+    const options = {
+        method: 'POST',
+        body: JSON.stringify(category)
+    }
 
-type Payload = Omit<Category, "id">;
+    const response = await fetch (`${DB_BASE_URL}/categories.json`, options)
+    const data = await response.json()
+    
+    if (data.name) {
+        return true
+    } else {
+        return false
+    }
+    
+    
+}
 
-const add = (category: Payload) => {
-  
-  const options: RequestInit = {
-    method: "POST",
-    body: JSON.stringify(category),
-  };
+const update = (category: Category) => {
 
-  fetch(
-    "https://todoapp-14821-default-rtdb.firebaseio.com/categories.json",
-    options
-  );
-};
+}
 
-export const categoriesService = { getAll, get, add };
+const remove = async (id: string) => {
+
+    const options = {
+        method: 'DELETE',
+    }
+
+   await fetch (`${DB_BASE_URL}/categories/${id}.json`, options)
+}
+
+
+export const categoriesService = { getAll, get, add, update, remove }

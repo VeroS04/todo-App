@@ -1,48 +1,57 @@
 import { useState } from "react";
-import { useParams } from "react-router-dom";
 import { categoriesService } from "../../services";
 
 const SaveCategory = () => {
-  const [catName, setCatName] = useState("");
 
-  const { categroyId } = useParams();
+  const [name, setName] = useState('');
+  const [color, setColor] = useState('');
 
-  const fetchCategory = () => {
-    if (categroyId) {
-      categoriesService.get(categroyId).then((data) => {
-        setCatName(data.name);
-      })
-    }
-  };
-  if(catName === '') fetchCategory()
+  const [ifError, setIfError] = useState(false)
 
-  const saveCategory = (e: any) => {
+  const sendForm = async (e: any) => {
     e.preventDefault();
 
-    categoriesService.add({ name: catName });
+    const rta = await categoriesService.add({ color, name })
+    
+    if (rta) {
+      setName('')
+      setColor('')
+    }else {
+      setIfError(true)
+    }
   };
 
   return (
-    <>
-      <h1>Guardar Categoría</h1>
-      <form onSubmit={saveCategory}>
-        <div className="form-group">
-          <label htmlFor="name-category">Nombre</label>
-          <input
-            type="text"
-            name="name"
-            id="name-category"
-            value={catName}
-            onChange={(e) => setCatName(e.target.value)}
+    <div>
+    <hr />
+      <form onSubmit={sendForm}>
+        <div>
+          <label htmlFor="name-control">Nombre</label>
+          <input 
+            type="text" 
+            name="name" 
+            id="name-control" 
+            value={name}
+            onChange= { (e) => setName(e.target.value)}
           />
         </div>
-
-        <button type="submit" className="btn btn-primary">
-          Agregar
-        </button>
+        <div>
+          <label htmlFor="color-control">Color</label>
+          <input 
+            type="color" 
+            name="color" 
+            id="color-control" 
+            value={color}
+            onChange= { (e) => setColor(e.target.value)}/>
+        </div>
+        <button type="submit">Enviar</button>
+        {
+          ifError && <p style={{color: 'red'}}>Hubo un error</p>
+        }
       </form>
-    </>
-  );
+    <hr />
+   </div>
+  )
 };
 
 export { SaveCategory };
