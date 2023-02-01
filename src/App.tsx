@@ -7,23 +7,9 @@ function App() {
       <Header />
       <Menu />
       <Main>
-        <div>
+        <div className="container">
           <Outlet />
-          <Button 
-            variant="dark" 
-            icon="x-circle"
-            handleClick={() => { console.log("Enviar") }}
-          >
-            Enviar
-          </Button>
-
-          <Button 
-            variant="primary"
-            icon="alarm"
-            handleClick={() => { console.log("iniciar sesión") }}
-          >
             Iniciar Sesión
-          </Button>
         </div>
       </Main>
       <Footer />

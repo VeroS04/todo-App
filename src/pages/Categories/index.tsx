@@ -1,10 +1,14 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { Button } from "../../components";
 import { categoriesService } from "../../services"
 import { Category } from "../../types";
 
 const Categories = () => {
 
   const [categories, setCategorie] = useState<Category[]>([])
+
+  const navigate = useNavigate()
 
   const obtenerCategorias = async () => {
     const rta = await categoriesService.getAll();
@@ -21,9 +25,8 @@ const Categories = () => {
 
   return (
    <div>
-    <hr />
     <h1>Categorias</h1>
-    <table border={1}>
+    <table className="table">
       <thead>
         <tr>
           <td>ID</td>
@@ -41,7 +44,16 @@ const Categories = () => {
                 <td>{elem.name}</td>
                 <td>{elem.color}</td>
                 <td>
-                  <button className="btn" onClick={() => borrarCategoria(elem.id)}>Borrar</button>
+                  <Button
+                    variant="danger" 
+                    icon="trash"
+                    handleClick={() =>borrarCategoria(elem.id)}
+                  />
+                  <Button 
+                    variant="primary" 
+                    icon="pencil"
+                    handleClick={() => navigate(`/categories/save/${elem.id}`)}
+                  />
                 </td>
               </tr>
             )
@@ -49,8 +61,6 @@ const Categories = () => {
         }
       </tbody>
     </table>
-      
-    <hr />
    </div>
   )
 

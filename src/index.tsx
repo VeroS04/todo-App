@@ -40,7 +40,7 @@ root.render(
         <Route path="categories/">
           <Route index element={<Categories />} />
           <Route path="save" element={<SaveCategory />} />
-          <Route path="save/:categroyId" element={<SaveCategory />} />
+          <Route path="save/:id" element={<SaveCategory />} />
         </Route>
       </Route>
     </Routes>

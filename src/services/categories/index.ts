@@ -1,20 +1,34 @@
 import { DB_BASE_URL } from "../../constants";
 import { mapToArray } from "../../helpers/mapToArray";
-import { Categories } from "../../pages";
 import { Category } from "../../types"
 
-
+/**
+ * 
+ *  
+ */
 const getAll = async (): Promise<Category[]> => {
-
    const response = await fetch (`${DB_BASE_URL}/categories.json`)
    const data = await response.json();
 
     return mapToArray<Category>(data)
 }
 
-const get = (id: string) => {
+/**
+ * 
+ *  
+ */
 
+const get = async (id: string): Promise<Category> => {
+   const response = await fetch(`${DB_BASE_URL}/categories/${id}.json`)
+   const data = await response.json();
+
+   return { id, ...data }
 }
+
+/**
+ * 
+ *  
+ */
 
 type Payload = Omit<Category, 'id'>
 
@@ -32,14 +46,20 @@ const add = async (category: Payload) => {
         return true
     } else {
         return false
-    }
-    
-    
+    }   
 }
 
-const update = (category: Category) => {
+/**
+ * 
+ *  
+ */
 
-}
+const update = (category: Category) => {}
+
+/**
+ * 
+ *  
+ */
 
 const remove = async (id: string) => {
 
